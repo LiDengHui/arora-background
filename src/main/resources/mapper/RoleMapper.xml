@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aurora.mapper.RoleMapper">
+    <resultMap id="resourceRoleResultMap" type="com.aurora.model.dto.ResourceRoleDTO">
+        <id property="id" column="id"></id>
+        <result property="url" column="id"></result>
+        <result property="requestMethod" column="request_method"></result>
+        <collection property="roleList" ofType="java.lang.String">
+            <constructor>
+                <arg column="role_name"></arg>
+            </constructor>
+        </collection>
+    </resultMap>
+    <select id="listResourceRoles" resultMap="resourceRoleResultMap">
+        select re.id as id,
+               url,
+               request_method,
+               role_name
+        from t_resource as re
+            left join t_role_resource rr on re.id = rr.resource_id
+            left join t_role ro on rr.role_id = ro.id
+        where re.parent_id is not null
+            and is_anonyous = 0;
+    </select>
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aurora.mapper.CategoryMapper">
+    <select id="listCategories" resultType="com.aurora.model.dto.CategoryDTO">
+        SELECT c.id,
+               c.category_name
+        FROM t_category AS c;
+    </select>
+
+    <select id="listCategoriesAdmin" resultType="com.aurora.model.dto.CategoryAdminDTO">
+        SELECT c.id,
+               c.category_name,
+               c.create_time
+        FROM t_category AS c
+        <where>
+            <if test="conditionVO.keywords != null">
+                category_name like concat('%', #{conditionVO.keywords}, "%")
+            </if>
+        </where>
+        GROUP BY
+            c.id
+        LIMIT #{current}, #{size}
+    </select>
+</mapper>
