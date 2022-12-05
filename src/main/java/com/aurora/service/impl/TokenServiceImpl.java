@@ -39,7 +39,7 @@ public class TokenServiceImpl implements TokenService {
     public String createToken(String subject) {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         SecretKey secretKey = generalKey();
-        return Jwts.builder().setId(getUuid()).setSubject(subject).setIssuer("huaweimian").signWith(signatureAlgorithm, secretKey).compact();
+        return Jwts.builder().setId(getUuid()).setSubject(subject).setIssuer("aurora").signWith(signatureAlgorithm, secretKey).compact();
     }
 
     @Override
